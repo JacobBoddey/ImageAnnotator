@@ -36,8 +36,8 @@ public:
     void append(ClassLabel label);
     void insert(ClassLabel label, int index);
 
-    ClassLabel first();
-    ClassLabel last();
+    Node* first();
+    Node* last();
 
     void remove(ClassLabel label);
 

@@ -1,6 +1,8 @@
 #include "linkedlist.h"
 
-Node::Node();
+Node::Node() {
+
+}
 
 ClassLabel Node::get() {
     return data;
@@ -43,12 +45,12 @@ void LinkedList::insert(ClassLabel label, int index) {
 
 }
 
-ClassLabel LinkedList::first() {
-    return head->get();
+Node* LinkedList::first() {
+    return head;
 }
 
-ClassLabel LinkedList::last() {
-    return tail->get();
+Node* LinkedList::last() {
+    return tail;
 }
 
 void LinkedList::remove(ClassLabel label) {

@@ -16,11 +16,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    annotation.cpp \
+    classlabel.cpp \
+    classlabelcontroller.cpp \
+    linkedlist.cpp \
     main.cpp \
     imageannotator.cpp
 
 HEADERS += \
-    imageannotator.h
+    annotation.h \
+    classlabel.h \
+    classlabelcontroller.h \
+    imageannotator.h \
+    linkedlist.h
 
 FORMS += \
     imageannotator.ui
