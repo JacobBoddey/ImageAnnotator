@@ -19,9 +19,11 @@ public:
 
 private slots:
     void on_browseClassButton_clicked();
+    void on_removeClassButton_clicked();
+
+    void on_classSortType_currentTextChanged(const QString &arg1);
 
 private:
-
     Ui::ImageAnnotator *ui;
 
 };

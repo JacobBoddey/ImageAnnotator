@@ -6,6 +6,7 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <iostream>
 
 ClassLabelController classLabelController;
 
@@ -42,6 +43,25 @@ void ImageAnnotator::on_browseClassButton_clicked()
         ClassLabel label = ClassLabel(line);
         classLabelController.addClassLabel(label);
     }
-    classLabelController.updateClassesList(ui);
+    classLabelController.updateClassesList(ui->classList);
 
+}
+
+void ImageAnnotator::on_removeClassButton_clicked()
+{
+    int row = ui->classList->currentRow();
+    QString text = ui->classList->item(row)->text();
+    ClassLabel label = classLabelController.getClassLabel(text);
+    classLabelController.removeClassLabel(label);
+    classLabelController.updateClassesList(ui->classList);
+}
+
+void ImageAnnotator::on_classSortType_currentTextChanged(const QString &sortType)
+{
+    if (sortType == "Ascending" || sortType == "Descending") {
+        classLabelController.updateClassesList(ui->classList, sortType);
+    }
+    else {
+        classLabelController.updateClassesList(ui->classList);
+    }
 }

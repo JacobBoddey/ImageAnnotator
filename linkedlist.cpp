@@ -1,5 +1,7 @@
 #include "linkedlist.h"
 
+#include <iostream>
+
 Node::Node() {
 
 }
@@ -45,12 +47,46 @@ void LinkedList::insert(ClassLabel label, int index) {
 
 }
 
+Node* LinkedList::get(int index) {
+    Node* current = head;
+    if (index == 0) {
+        return current;
+    }
+    for (int i = 0; i <= index; i++) {
+        if (i == index) {
+            return current;
+        }
+        current = current->getNext();
+    }
+}
+
 Node* LinkedList::first() {
     return head;
 }
 
 Node* LinkedList::last() {
     return tail;
+}
+
+int LinkedList::size() {
+
+    int size = 0;
+
+    Node* temp;
+    temp = head;
+
+    while (temp != tail->getNext()) {
+        size++;
+        temp = temp->getNext();
+    }
+
+    return size;
+}
+
+void LinkedList::swap(Node* node1, Node* node2) {
+    ClassLabel temp = node1->get();
+    node1->set(node2->get());
+    node2->set(temp);
 }
 
 void LinkedList::remove(ClassLabel label) {
@@ -64,8 +100,7 @@ void LinkedList::remove(ClassLabel label) {
         if (temp->get().getName() == label.getName()) {
             if (temp == head) {
                 //Front of the list (only item in the list)
-                head = nullptr;
-                tail = nullptr;
+                head = head->getNext();
                 return;
             }
             else if (temp->getNext() == nullptr) {

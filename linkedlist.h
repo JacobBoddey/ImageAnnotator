@@ -32,13 +32,19 @@ private:
 
 public:
     LinkedList();
+    LinkedList(const LinkedList& list);
 
     void append(ClassLabel label);
     void insert(ClassLabel label, int index);
 
+    Node* get(int index);
+
     Node* first();
     Node* last();
 
+    int size();
+
+    void swap(Node* node1, Node* node2);
     void remove(ClassLabel label);
 
 };

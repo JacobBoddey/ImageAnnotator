@@ -4,7 +4,7 @@
 #include <linkedlist.h>
 #include <classlabel.h>
 
-#include <ui_imageannotator.h>
+#include <QListWidget>
 
 class ClassLabelController
 {
@@ -17,11 +17,17 @@ public:
 
     ClassLabelController();
 
-    LinkedList getClasses();
+    LinkedList* getClasses();
 
-    void ClassLabelController::addClassLabel(ClassLabel label);
+    ClassLabel getClassLabel(QString text);
 
-    void updateClassesList(Ui::ImageAnnotator* ui);
+    void addClassLabel(ClassLabel label);
+
+    void removeClassLabel(ClassLabel label);
+
+    void updateClassesList(QListWidget* listWidget, QString sortType = "Unsorted");
+
+    LinkedList* sortClasses(QString sortType);
 
 };
 
