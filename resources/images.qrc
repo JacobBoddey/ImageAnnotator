@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>addClass.png</file>
+        <file>removeClass.png</file>
+        <file>sort.png</file>
+        <file>undo.png</file>
+        <file>triangle.png</file>
+        <file>square.png</file>
+        <file>polygon.png</file>
+        <file>trapezium.png</file>
+        <file>cursor.png</file>
+    </qresource>
+</RCC>
