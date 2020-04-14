@@ -153,3 +153,17 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
     ui->graphicsView->setScene(scene);
 
 }
+
+void ImageAnnotator::on_zoomInButton_clicked()
+{
+    if (ui->graphicsView->transform().m11() < 2.0) {
+        ui->graphicsView->scale(1.25, 1.25);
+    }
+}
+
+void ImageAnnotator::on_zoomOutButton_clicked()
+{
+    if (ui->graphicsView->transform().m11() > 0.05) {
+        ui->graphicsView->scale(0.75, 0.75);
+    }
+}

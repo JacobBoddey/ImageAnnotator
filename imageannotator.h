@@ -34,6 +34,10 @@ private slots:
 
     void on_imageTableView_cellClicked(int row, int column);
 
+    void on_zoomInButton_clicked();
+
+    void on_zoomOutButton_clicked();
+
 private:
     Ui::ImageAnnotator *ui;
 

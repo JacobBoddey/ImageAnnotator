@@ -211,7 +211,7 @@
       <x>10</x>
       <y>290</y>
       <width>251</width>
-      <height>251</height>
+      <height>261</height>
      </rect>
     </property>
     <property name="title">
@@ -468,6 +468,44 @@
       <string/>
      </property>
     </widget>
+   </widget>
+   <widget class="QToolButton" name="zoomInButton">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>40</y>
+      <width>23</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:addClass.png);background-color:&quot;#e1e1e1&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="zoomOutButton">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>40</y>
+      <width>23</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:removeClass.png);background-color:&quot;#e1e1e1&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
