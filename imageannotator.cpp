@@ -6,6 +6,7 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <QMessageBox>
 #include <iostream>
 
 ClassLabelController classLabelController;
@@ -33,7 +34,9 @@ void ImageAnnotator::on_browseClassButton_clicked()
         return;
     }
 
-    QString classes = "";
+    classLabelController.openClassesFile = fileName;
+    ui->actionSaveClasses->setEnabled(true);
+
     QFile classesFile(fileName);
     classesFile.open(QIODevice::ReadOnly);
 
@@ -64,4 +67,25 @@ void ImageAnnotator::on_classSortType_currentTextChanged(const QString &sortType
     else {
         classLabelController.updateClassesList(ui->classList);
     }
+}
+
+void ImageAnnotator::on_actionSaveClasses_triggered()
+{
+    if (classLabelController.openClassesFile == nullptr) {
+        //Should not have reached here
+        return;
+    }
+
+    QFile classesFile(classLabelController.openClassesFile);
+    if (!classesFile.exists()) {
+        //Been deleted since opened
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","The classes file that you have loaded into Image Annotator no longer exists");
+        messageBox.setFixedSize(500,200);
+        ui->actionSaveClasses->setEnabled(false);
+        return;
+    }
+
+    classesFile.open(QIODevice::WriteOnly);
+
 }

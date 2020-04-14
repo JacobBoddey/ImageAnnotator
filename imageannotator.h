@@ -23,6 +23,8 @@ private slots:
 
     void on_classSortType_currentTextChanged(const QString &arg1);
 
+    void on_actionSaveClasses_triggered();
+
 private:
     Ui::ImageAnnotator *ui;
 

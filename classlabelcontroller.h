@@ -29,6 +29,8 @@ public:
 
     LinkedList* sortClasses(QString sortType);
 
+    QString openClassesFile;
+
 };
 
 #endif // CLASSLABELCONTROLLER_H
