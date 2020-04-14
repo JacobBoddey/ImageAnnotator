@@ -11,6 +11,14 @@ QList<Image*>* ImageController::getImages() {
     return &images;
 }
 
+Image* ImageController::getImage(QString name) {
+    for (int i = 0 ; i < images.size() ; i++) {
+        if (images.at(i)->getName() == name) {
+            return images.at(i);
+        }
+    }
+}
+
 void ImageController::loadImages(QDir dir) {
 
     QFileInfoList imagesList = dir.entryInfoList(QStringList() << "*.jpg" << "*.png", QDir::Files);

@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     annotation.cpp \
+    annotationcontroller.cpp \
     classlabel.cpp \
     classlabelcontroller.cpp \
     image.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     annotation.h \
+    annotationcontroller.h \
     classlabel.h \
     classlabelcontroller.h \
     image.h \

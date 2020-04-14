@@ -2,6 +2,7 @@
 #define IMAGEANNOTATOR_H
 
 #include <QMainWindow>
+#include <QTableWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageAnnotator; }
@@ -30,6 +31,8 @@ private slots:
     void on_sortImageReset_clicked();
 
     void on_sortImageButton_clicked();
+
+    void on_imageTableView_cellClicked(int row, int column);
 
 private:
     Ui::ImageAnnotator *ui;

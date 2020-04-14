@@ -1,11 +1,14 @@
 #include "image.h"
 
+#include <iostream>
+
 Image::Image(QFile* f, QFileInfo* info)
 {
     imageFile = f;
     name = info->fileName();
     path = info->path();
     dateModified = info->lastModified();
+
 }
 
 QString Image::getPath() {

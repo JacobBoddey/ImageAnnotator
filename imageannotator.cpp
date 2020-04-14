@@ -2,16 +2,26 @@
 #include "ui_imageannotator.h"
 
 #include <classlabelcontroller.h>
-
 #include <imagecontroller.h>
 
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QGraphicsPixmapItem>
+
+#include <thread>
 #include <iostream>
 
 ClassLabelController classLabelController;
 ImageController imageController;
+
+void AutoSave() {
+    while (true) {
+        std::cout << "Ran auto save" << std::endl;
+        std::chrono::seconds sec(5);
+        std::this_thread::sleep_for(sec);
+    }
+}
 
 ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui::ImageAnnotator)
 {
@@ -19,6 +29,8 @@ ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui
 
     classLabelController = ClassLabelController();
     imageController = ImageController();
+
+    //std::thread autoSaveThread(AutoSave);
 
 }
 
@@ -121,5 +133,23 @@ void ImageAnnotator::on_sortImageButton_clicked()
     else {
         imageController.displayImages(ui->imageTableView, imageController.sortByDate(sortOrder));
     }
+
+}
+
+void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
+{
+    column = 0;
+
+    QString name = ui->imageTableView->item(row, column)->text();
+
+    Image* image = imageController.getImage(name);
+
+    QImage qImage(image->getPath() + "/" + image->getName());
+
+    QGraphicsScene* scene = new QGraphicsScene();
+    QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(qImage));
+    scene->addItem(item);
+
+    ui->graphicsView->setScene(scene);
 
 }

@@ -20,6 +20,8 @@ public:
 
     QList<Image*>* getImages();
 
+    Image* getImage(QString name);
+
     void loadImages(QDir dir);
 
     void addImage(Image* image);
