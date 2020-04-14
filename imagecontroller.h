@@ -27,8 +27,8 @@ public:
 
     void displayImages(QTableWidget* widget, QList<Image*>* im);
 
-    QList<Image> sortByDate(QString sortType);
-    QList<Image> sortByName(QString sortType);
+    QList<Image*>* sortByDate(QString sortType);
+    QList<Image*>* sortByName(QString sortType);
 
 };
 

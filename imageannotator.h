@@ -27,6 +27,10 @@ private slots:
 
     void on_browseImageButton_clicked();
 
+    void on_sortImageReset_clicked();
+
+    void on_sortImageButton_clicked();
+
 private:
     Ui::ImageAnnotator *ui;
 

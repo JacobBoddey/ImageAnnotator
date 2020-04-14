@@ -1,5 +1,7 @@
 #include "imagecontroller.h"
 
+#include <iostream>
+
 ImageController::ImageController()
 {
     images = QList<Image*>();
@@ -33,7 +35,9 @@ void ImageController::removeImage(Image* i) {
 
 void ImageController::displayImages(QTableWidget* widget, QList<Image*>* im) {
 
-    widget->clearContents();
+    for (int i = widget->rowCount() ; i >= 0 ; i--) {
+        widget->removeRow(i);
+    }
 
     for (int i = 0 ; i < im->size() ; i ++) {
         Image* image = images.at(i);
@@ -42,13 +46,53 @@ void ImageController::displayImages(QTableWidget* widget, QList<Image*>* im) {
         QTableWidgetItem* dateModified = new QTableWidgetItem(image->getDateModified().toString("dd/MM/yy"));
         dateModified->setTextAlignment(Qt::AlignCenter);
 
-        widget->insertRow(widget->rowCount());
+        widget->insertRow(i);
 
-        widget->setItem(widget->rowCount() - 1, 0, fileName);
-        widget->setItem(widget->rowCount() - 1, 1, dateModified);
+        widget->setItem(i, 0, fileName);
+        widget->setItem(i, 1, dateModified);
 
-       widget->resizeRowToContents(widget->rowCount() - 1);
+        widget->resizeRowToContents(i);
 
     }
 
+}
+
+QList<Image*>* ImageController::sortByName(QString sortType) {
+
+    for (int i = 0; i < getImages()->size() - 1; i++) {
+        for (int j = 0; j < getImages()->size() - i - 1; j++) {
+            if (sortType == "Descending") {
+                if (getImages()->at(j)->getName() < getImages()->at(j+1)->getName()) {
+                    getImages()->swap(j, j+1);
+                }
+            }
+            else {
+                if (getImages()->at(j)->getName() > getImages()->at(j+1)->getName()) {
+                    getImages()->swap(j, j+1);
+                }
+            }
+        }
+    }
+
+    return getImages();
+}
+
+QList<Image*>* ImageController::sortByDate(QString sortType) {
+
+    for (int i = 0; i < getImages()->size() - 1; i++) {
+        for (int j = 0; j < getImages()->size() - i - 1; j++) {
+            if (sortType == "Descending") {
+                if (getImages()->at(j)->getDateModified() < getImages()->at(j+1)->getDateModified()) {
+                    getImages()->swap(j, j+1);
+                }
+            }
+            else {
+                if (getImages()->at(j)->getDateModified() > getImages()->at(j+1)->getDateModified()) {
+                    getImages()->swap(j, j+1);
+                }
+            }
+        }
+    }
+
+    return getImages();
 }

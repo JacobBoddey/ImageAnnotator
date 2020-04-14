@@ -102,3 +102,24 @@ void ImageAnnotator::on_browseImageButton_clicked()
     imageController.displayImages(ui->imageTableView, imageController.getImages());
 
 }
+
+void ImageAnnotator::on_sortImageReset_clicked()
+{
+    ui->sortImageType->setCurrentIndex(0);
+    ui->sortImageOrder->setCurrentIndex(0);
+    imageController.displayImages(ui->imageTableView, imageController.sortByName("Ascending"));
+}
+
+void ImageAnnotator::on_sortImageButton_clicked()
+{
+    QString sortWhat = ui->sortImageType->currentText();
+    QString sortOrder = ui->sortImageOrder->currentText();
+
+    if (sortWhat == "Name") {
+        imageController.displayImages(ui->imageTableView, imageController.sortByName(sortOrder));
+    }
+    else {
+        imageController.displayImages(ui->imageTableView, imageController.sortByDate(sortOrder));
+    }
+
+}
