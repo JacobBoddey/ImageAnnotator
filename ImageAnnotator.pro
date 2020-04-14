@@ -19,6 +19,8 @@ SOURCES += \
     annotation.cpp \
     classlabel.cpp \
     classlabelcontroller.cpp \
+    image.cpp \
+    imagecontroller.cpp \
     linkedlist.cpp \
     main.cpp \
     imageannotator.cpp
@@ -27,7 +29,9 @@ HEADERS += \
     annotation.h \
     classlabel.h \
     classlabelcontroller.h \
+    image.h \
     imageannotator.h \
+    imagecontroller.h \
     linkedlist.h
 
 FORMS += \

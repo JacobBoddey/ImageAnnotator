@@ -1,8 +1,9 @@
 #include "imageannotator.h"
 #include "ui_imageannotator.h"
 
-#include <classlabel.h>
 #include <classlabelcontroller.h>
+
+#include <imagecontroller.h>
 
 #include <QFileDialog>
 #include <QTextStream>
@@ -10,12 +11,14 @@
 #include <iostream>
 
 ClassLabelController classLabelController;
+ImageController imageController;
 
 ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui::ImageAnnotator)
 {
     ui->setupUi(this);
 
     classLabelController = ClassLabelController();
+    imageController = ImageController();
 
 }
 
@@ -87,5 +90,15 @@ void ImageAnnotator::on_actionSaveClasses_triggered()
     }
 
     classesFile.open(QIODevice::WriteOnly);
+
+}
+
+void ImageAnnotator::on_browseImageButton_clicked()
+{
+    QDir imagesDirectory = QFileDialog::getExistingDirectory(this, "Open images folder", QDir::currentPath(), QFileDialog::ShowDirsOnly);
+    QString imagesDirectoryPath = imagesDirectory.path();
+
+    imageController.loadImages(imagesDirectory);
+    imageController.displayImages(ui->imageTableView, imageController.getImages());
 
 }

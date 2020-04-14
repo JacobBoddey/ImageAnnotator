@@ -25,6 +25,8 @@ private slots:
 
     void on_actionSaveClasses_triggered();
 
+    void on_browseImageButton_clicked();
+
 private:
     Ui::ImageAnnotator *ui;
 
