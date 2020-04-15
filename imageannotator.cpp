@@ -8,16 +8,10 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
-#include <QGraphicsPixmapItem>
+#include <graphicsimage.h>
 
 #include <thread>
 #include <iostream>
-
-enum ShapeType {
-    NONE, TRIANGLE, RECTANGLE, TRAPEZIUM, POLYGON
-};
-
-ShapeType selectedShape;
 
 AnnotationController annotationController;
 ClassLabelController classLabelController;
@@ -155,8 +149,10 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
     QImage qImage(image->getPath() + "/" + image->getName());
 
     QGraphicsScene* scene = new QGraphicsScene();
-    QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(qImage));
-    scene->addItem(item);
+    QPixmap pixmap = QPixmap::fromImage(qImage);
+    graphicsImage = new GraphicsImage(new QObject());
+    graphicsImage->setPixmap(pixmap);
+    scene->addItem(graphicsImage);
 
     ui->graphicsView->setScene(scene);
 
@@ -178,27 +174,27 @@ void ImageAnnotator::on_zoomOutButton_clicked()
 
 void ImageAnnotator::on_triangleButton_clicked()
 {
-    selectedShape = TRIANGLE;
+    //scene->setMode(GraphicsScene::TRIANGLE);
 }
 
 void ImageAnnotator::on_squareButton_clicked()
 {
-    selectedShape = RECTANGLE;
+    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::RECTANGLE);
 }
 
 void ImageAnnotator::on_trapeziumButton_clicked()
 {
-    selectedShape = TRAPEZIUM;
+    //scene->setMode(GraphicsScene::DrawMode::TRAPEZIUM);
 }
 
 void ImageAnnotator::on_polygonButton_clicked()
 {
-    selectedShape = POLYGON;
+    //scene->setMode(GraphicsScene::DrawMode::POLYGON);
 }
 
 void ImageAnnotator::on_selectCursor_clicked()
 {
-    selectedShape = NONE;
+    //scene->setMode(GraphicsScene::DrawMode::SELECT);
 }
 
 void ImageAnnotator::on_actionOpen_triggered()

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
+#include <graphicsimage.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageAnnotator; }
@@ -19,7 +20,9 @@ public:
     ~ImageAnnotator();
 
 private slots:
+
     void on_browseClassButton_clicked();
+
     void on_removeClassButton_clicked();
 
     void on_classSortType_currentTextChanged(const QString &arg1);
@@ -53,7 +56,10 @@ private slots:
     void on_actionSave_As_triggered();
 
 private:
+
     Ui::ImageAnnotator *ui;
+
+    GraphicsImage* graphicsImage;
 
 };
 #endif // IMAGEANNOTATOR_H
