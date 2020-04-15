@@ -1,6 +1,7 @@
 #ifndef GRAPHICSIMAGE_H
 #define GRAPHICSIMAGE_H
 
+#include <QApplication>
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
@@ -20,11 +21,16 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+
     ~GraphicsImage();
 
 private:
 
     DrawMode drawingMode = DrawMode::SELECT;
+
+    QList<QPointF> points;
+    QList<QLine> tempLines;
 
 };
 

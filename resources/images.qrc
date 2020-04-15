@@ -9,5 +9,8 @@
         <file>polygon.png</file>
         <file>trapezium.png</file>
         <file>cursor.png</file>
+        <file>copy.png</file>
+        <file>delete.png</file>
+        <file>paste.png</file>
     </qresource>
 </RCC>
