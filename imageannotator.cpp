@@ -1,6 +1,7 @@
 #include "imageannotator.h"
 #include "ui_imageannotator.h"
 
+#include <annotationcontroller.h>
 #include <classlabelcontroller.h>
 #include <imagecontroller.h>
 
@@ -18,6 +19,7 @@ enum ShapeType {
 
 ShapeType selectedShape;
 
+AnnotationController annotationController;
 ClassLabelController classLabelController;
 ImageController imageController;
 
@@ -197,4 +199,17 @@ void ImageAnnotator::on_polygonButton_clicked()
 void ImageAnnotator::on_selectCursor_clicked()
 {
     selectedShape = NONE;
+}
+
+void ImageAnnotator::on_actionOpen_triggered()
+{
+
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Annotations", QDir::currentPath(), "Annotations (*.annotations)");
+    QFile annotationsFile(fileName);
+
+}
+
+void ImageAnnotator::on_actionSave_As_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Annotations", QDir::currentPath(), ".annotations");
 }

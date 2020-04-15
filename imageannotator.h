@@ -40,6 +40,18 @@ private slots:
 
     void on_triangleButton_clicked();
 
+    void on_squareButton_clicked();
+
+    void on_trapeziumButton_clicked();
+
+    void on_polygonButton_clicked();
+
+    void on_selectCursor_clicked();
+
+    void on_actionOpen_triggered();
+
+    void on_actionSave_As_triggered();
+
 private:
     Ui::ImageAnnotator *ui;
 

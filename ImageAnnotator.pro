@@ -20,6 +20,7 @@ SOURCES += \
     annotationcontroller.cpp \
     classlabel.cpp \
     classlabelcontroller.cpp \
+    filecontroller.cpp \
     image.cpp \
     imagecontroller.cpp \
     linkedlist.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     annotationcontroller.h \
     classlabel.h \
     classlabelcontroller.h \
+    filecontroller.h \
     image.h \
     imageannotator.h \
     imagecontroller.h \
