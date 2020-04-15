@@ -5,6 +5,9 @@
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QEvent>
+#include <QGraphicsLineItem>
+#include <QPen>
 
 class GraphicsImage : public QObject, public QGraphicsPixmapItem
 {
@@ -15,13 +18,21 @@ public:
 
     GraphicsImage(QObject* parent);
 
+    QList<QPointF> getPoints();
+
     void setDrawingMode(DrawMode mode);
 
     DrawMode getDrawingMode();
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
+
+    void drawLine(QPointF from, QPointF to);
+
+    void clearLines();
+
+    void drawShape(QList<QPointF> points);
 
     ~GraphicsImage();
 
@@ -30,7 +41,8 @@ private:
     DrawMode drawingMode = DrawMode::SELECT;
 
     QList<QPointF> points;
-    QList<QLine> tempLines;
+    QList<QGraphicsLineItem*> tempLines;
+    QGraphicsLineItem* drawingLine;
 
 };
 

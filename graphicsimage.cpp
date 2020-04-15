@@ -5,6 +5,18 @@
 GraphicsImage::GraphicsImage(QObject* parent)
 {
     points = QList<QPointF>();
+    tempLines = QList<QGraphicsLineItem*>();
+
+    drawingLine = new QGraphicsLineItem(this);
+    QPen pen = QPen();
+    pen.setWidth(2);
+    drawingLine->setPen(pen);
+    drawingLine->hide();
+
+}
+
+QList<QPointF> GraphicsImage::getPoints() {
+    return points;
 }
 
 void GraphicsImage::setDrawingMode(GraphicsImage::DrawMode mode) {
@@ -28,16 +40,14 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         //If point is found, drag point
     }
     else if (drawingMode == TRIANGLE) {
-        if (points.size() == 1) {
-            //Plot the second, then join the first and last points
-            points.empty();
+        points.append(event->scenePos());
+        if (points.size() == 2) {
+             drawLine(points.at(0), points.at(1));
         }
-        else {
-            points.append(event->scenePos());
-            if (points.size() == 2) {
-                //Draw line from first to last point
-            }
+        else if (points.size() == 3) {
+            drawShape(points);
         }
+        return;
     }
     else if (drawingMode == RECTANGLE) {
         if (points.size() == 2) {
@@ -79,12 +89,42 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
 }
 
-void GraphicsImage::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 
-    if (points.size() != 0) {
-        //Draw line from last point to cursor
+    if (!points.empty()) {
+        drawingLine->show();
+        if (getDrawingMode() == TRIANGLE) {
+            QLineF line = QLineF();
+            line.setP1(getPoints().last());
+            line.setP2(event->scenePos());
+            drawingLine->setLine(line);
+        }
     }
 
+}
+
+void GraphicsImage::drawLine(QPointF from, QPointF to) {
+    QGraphicsLineItem* line = new QGraphicsLineItem(this);
+    QLineF lineF = QLineF(from, to);
+    QPen pen = QPen();
+    pen.setWidth(2);
+    line->setPen(pen);
+    line->setLine(lineF);
+    tempLines.append(line);
+}
+
+void GraphicsImage::clearLines() {
+    for (int i = 0; i < tempLines.size();i++) {
+        QGraphicsLineItem* item = tempLines.at(i);
+        delete item;
+    }
+    tempLines.clear();
+}
+
+void GraphicsImage::drawShape(QList<QPointF> p) {
+    clearLines();
+    points.clear();
+    drawingLine->hide();
 }
 
 GraphicsImage::~GraphicsImage() {

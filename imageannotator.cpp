@@ -152,9 +152,12 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
     QPixmap pixmap = QPixmap::fromImage(qImage);
     graphicsImage = new GraphicsImage(new QObject());
     graphicsImage->setPixmap(pixmap);
+    graphicsImage->setAcceptHoverEvents(true);
     scene->addItem(graphicsImage);
 
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setMouseTracking(true);
+    ui->graphicsView->setInteractive(true);
 
 }
 
@@ -174,7 +177,7 @@ void ImageAnnotator::on_zoomOutButton_clicked()
 
 void ImageAnnotator::on_triangleButton_clicked()
 {
-    //scene->setMode(GraphicsScene::TRIANGLE);
+    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::TRIANGLE);
 }
 
 void ImageAnnotator::on_squareButton_clicked()
@@ -184,17 +187,17 @@ void ImageAnnotator::on_squareButton_clicked()
 
 void ImageAnnotator::on_trapeziumButton_clicked()
 {
-    //scene->setMode(GraphicsScene::DrawMode::TRAPEZIUM);
+    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::TRAPEZIUM);
 }
 
 void ImageAnnotator::on_polygonButton_clicked()
 {
-    //scene->setMode(GraphicsScene::DrawMode::POLYGON);
+    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::POLYGON);
 }
 
 void ImageAnnotator::on_selectCursor_clicked()
 {
-    //scene->setMode(GraphicsScene::DrawMode::SELECT);
+    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::SELECT);
 }
 
 void ImageAnnotator::on_actionOpen_triggered()
