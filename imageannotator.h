@@ -38,6 +38,8 @@ private slots:
 
     void on_zoomOutButton_clicked();
 
+    void on_triangleButton_clicked();
+
 private:
     Ui::ImageAnnotator *ui;
 

@@ -12,6 +12,12 @@
 #include <thread>
 #include <iostream>
 
+enum ShapeType {
+    NONE, TRIANGLE, RECTANGLE, TRAPEZIUM, POLYGON
+};
+
+ShapeType selectedShape;
+
 ClassLabelController classLabelController;
 ImageController imageController;
 
@@ -166,4 +172,29 @@ void ImageAnnotator::on_zoomOutButton_clicked()
     if (ui->graphicsView->transform().m11() > 0.05) {
         ui->graphicsView->scale(0.75, 0.75);
     }
+}
+
+void ImageAnnotator::on_triangleButton_clicked()
+{
+    selectedShape = TRIANGLE;
+}
+
+void ImageAnnotator::on_squareButton_clicked()
+{
+    selectedShape = RECTANGLE;
+}
+
+void ImageAnnotator::on_trapeziumButton_clicked()
+{
+    selectedShape = TRAPEZIUM;
+}
+
+void ImageAnnotator::on_polygonButton_clicked()
+{
+    selectedShape = POLYGON;
+}
+
+void ImageAnnotator::on_selectCursor_clicked()
+{
+    selectedShape = NONE;
 }
