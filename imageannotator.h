@@ -57,6 +57,8 @@ private slots:
 
     void on_deleteButton_clicked();
 
+    void on_addClassButton_clicked();
+
 private:
 
     Ui::ImageAnnotator *ui;

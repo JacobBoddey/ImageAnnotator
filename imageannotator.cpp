@@ -69,11 +69,20 @@ void ImageAnnotator::on_browseClassButton_clicked()
 
 void ImageAnnotator::on_removeClassButton_clicked()
 {
-    int row = ui->classList->currentRow();
-    QString text = ui->classList->item(row)->text();
-    ClassLabel label = classLabelController.getClassLabel(text);
-    classLabelController.removeClassLabel(label);
-    classLabelController.updateClassesList(ui->classList);
+
+    if (ui->classList->selectedItems().size() > 0) {
+        int row = ui->classList->currentRow();
+        std::cout << "1" << std::endl;
+        QString text = ui->classList->item(row)->text();
+        std::cout << "2" << std::endl;
+        ClassLabel label = classLabelController.getClassLabel(text);
+        std::cout << "3" << std::endl;
+        classLabelController.removeClassLabel(label);
+        std::cout << "4" << std::endl;
+        QString sortType = ui->classSortType->currentText();
+        std::cout << "5" << std::endl;
+        classLabelController.updateClassesList(ui->classList, sortType);
+    }
 }
 
 void ImageAnnotator::on_classSortType_currentTextChanged(const QString &sortType)
@@ -227,5 +236,31 @@ void ImageAnnotator::on_actionOpen_triggered()
 
 void ImageAnnotator::on_actionSave_As_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save Annotations", QDir::currentPath(), ".annotations");
+
+    QFileDialog* fileDialog = new QFileDialog();
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    QString fileName = fileDialog->getSaveFileName(this, "Save Annotations", QDir::currentPath(), tr("Annotations (*.annotations)"));
+
+
+
+}
+
+void ImageAnnotator::on_addClassButton_clicked()
+{
+    if (ui->addClassInput->text().length() > 0) {
+        QString classToAdd = ui->addClassInput->text();
+        if (classLabelController.classExists(classToAdd)) {
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error","A class with that name already exists");
+            messageBox.setFixedSize(500,200);
+            ui->actionSaveClasses->setEnabled(false);
+            return;
+        }
+        else {
+            std::cout << "Adding class" << std::endl;
+            classLabelController.addClassLabel(classToAdd);
+            QString sortType = ui->classSortType->currentText();
+            classLabelController.updateClassesList(ui->classList, sortType);
+        }
+    }
 }

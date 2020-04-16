@@ -22,6 +22,20 @@ ClassLabel ClassLabelController::getClassLabel(QString text) {
     }
 }
 
+bool ClassLabelController::classExists(QString label) {
+    Node* current = classes.first();
+    if (current == nullptr) {
+        return false;
+    }
+    while (current != classes.last()->getNext()) {
+        if (current->get().getName() == label) {
+            return true;
+        }
+        current = current->getNext();
+    }
+    return false;
+}
+
 void ClassLabelController::addClassLabel(ClassLabel label) {
     classes.append(label);
 }
@@ -34,22 +48,19 @@ void ClassLabelController::updateClassesList(QListWidget* listWidget, QString so
 
     listWidget->clear();
 
-    LinkedList* classesList;
-
-    if (getClasses()->size() == 0) {
+    if (classes.size() == 0) {
+        std::cout << "No classes to display" << std::endl;
         return;
     }
 
-    if (sortType == "Unsorted") {
-        classesList = getClasses();
-    }
-    else {
-        classesList = sortClasses(sortType);
-    }
+    LinkedList* classesList = sortClasses(sortType);
 
     Node* current = classesList->first();
 
+    std::cout << "6" << std::endl;
+
     while (current != classesList->last()->getNext()) {
+        std::cout << "7" << std::endl;
         listWidget->addItem(current->get().getName());
         current = current->getNext();
     }
@@ -58,8 +69,12 @@ void ClassLabelController::updateClassesList(QListWidget* listWidget, QString so
 
 LinkedList* ClassLabelController::sortClasses(QString sortType) {
 
+    std::cout << "Sorting...";
+
     for (int i = 0; i < classes.size() - 1; i++) {
+        std::cout << "i = " << i << std::endl;
         for (int j = 0; j < getClasses()->size() - i - 1; j++) {
+            std::cout << "j = " << j << std::endl;
             if (sortType == "Descending") {
                 if (getClasses()->get(j)->get().getName() < getClasses()->get(j+1)->get().getName()) {
                     getClasses()->swap(getClasses()->get(j), getClasses()->get(j+1));

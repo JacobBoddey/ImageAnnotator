@@ -21,6 +21,8 @@ public:
 
     ClassLabel getClassLabel(QString text);
 
+    bool classExists(QString label);
+
     void addClassLabel(ClassLabel label);
 
     void removeClassLabel(ClassLabel label);
