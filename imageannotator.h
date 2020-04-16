@@ -55,6 +55,8 @@ private slots:
 
     void on_actionSave_As_triggered();
 
+    void on_deleteButton_clicked();
+
 private:
 
     Ui::ImageAnnotator *ui;

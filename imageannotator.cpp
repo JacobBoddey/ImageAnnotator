@@ -177,27 +177,44 @@ void ImageAnnotator::on_zoomOutButton_clicked()
 
 void ImageAnnotator::on_triangleButton_clicked()
 {
-    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::TRIANGLE);
+    if (graphicsImage != NULL) {
+        graphicsImage->setDrawingMode(GraphicsImage::DrawMode::TRIANGLE);
+    }
 }
 
 void ImageAnnotator::on_squareButton_clicked()
 {
-    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::RECTANGLE);
+    if (graphicsImage != NULL) {
+        graphicsImage->setDrawingMode(GraphicsImage::DrawMode::RECTANGLE);
+    }
 }
 
 void ImageAnnotator::on_trapeziumButton_clicked()
 {
-    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::TRAPEZIUM);
+    if (graphicsImage != NULL) {
+        graphicsImage->setDrawingMode(GraphicsImage::DrawMode::TRAPEZIUM);
+    }
 }
 
 void ImageAnnotator::on_polygonButton_clicked()
 {
-    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::POLYGON);
+    if (graphicsImage != NULL) {
+        graphicsImage->setDrawingMode(GraphicsImage::DrawMode::POLYGON);
+    }
 }
 
 void ImageAnnotator::on_selectCursor_clicked()
 {
-    graphicsImage->setDrawingMode(GraphicsImage::DrawMode::SELECT);
+    if (graphicsImage != NULL) {
+        graphicsImage->setDrawingMode(GraphicsImage::DrawMode::SELECT);
+    }
+}
+
+void ImageAnnotator::on_deleteButton_clicked()
+{
+    if (graphicsImage != NULL) {
+        graphicsImage->setDrawingMode(GraphicsImage::DrawMode::DELETE);
+    }
 }
 
 void ImageAnnotator::on_actionOpen_triggered()

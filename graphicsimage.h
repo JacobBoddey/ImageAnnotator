@@ -16,7 +16,7 @@ class GraphicsImage : public QObject, public QGraphicsPixmapItem
 
 public:
 
-    enum DrawMode { SELECT, TRIANGLE, RECTANGLE, TRAPEZIUM, POLYGON };
+    enum DrawMode { SELECT, DELETE, COPY, PASTE, TRIANGLE, RECTANGLE, TRAPEZIUM, POLYGON };
 
     GraphicsImage(QObject* parent);
 
@@ -46,6 +46,7 @@ private:
     QList<QGraphicsLineItem*> tempLines;
     QList<QGraphicsPolygonItem*> shapes;
     QGraphicsLineItem* drawingLine;
+    QGraphicsPolygonItem* selectedShape;
 
 };
 

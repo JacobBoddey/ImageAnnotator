@@ -8,6 +8,8 @@ GraphicsImage::GraphicsImage(QObject* parent)
     tempLines = QList<QGraphicsLineItem*>();
     shapes = QList<QGraphicsPolygonItem*>();
 
+    selectedShape = NULL;
+
     drawingLine = new QGraphicsLineItem(this);
     QPen pen = QPen();
     pen.setWidth(2);
@@ -22,7 +24,7 @@ QList<QPointF> GraphicsImage::getPoints() {
 
 void GraphicsImage::setDrawingMode(GraphicsImage::DrawMode mode) {
     drawingMode = mode;
-    if (mode != SELECT) {
+    if (mode != SELECT && mode != DELETE) {
         QApplication::setOverrideCursor(Qt::CrossCursor);
     }
     else {
@@ -37,8 +39,37 @@ GraphicsImage::DrawMode GraphicsImage::getDrawingMode() {
 void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
     if (drawingMode == SELECT) {
-        //Check for point within radius
-        //If point is found, drag point
+
+        if (selectedShape != NULL) { //A shape is already selected, check if it is still selected
+            if (selectedShape->contains(event->scenePos())) {
+                //Still selected, do nothing
+                std::cout << "Shape is still selected" << std::endl;
+                return;
+            }
+            else { //Shape is no longer selected, de select it
+                selectedShape->setSelected(false);
+                std::cout << "Deselecting shape" << std::endl;
+                selectedShape = NULL;
+            }
+        }
+
+        foreach (QGraphicsPolygonItem* polygon, shapes) {
+            if (polygon->contains(event->scenePos())) {
+                selectedShape = polygon;
+                polygon->setSelected(true);
+                return;
+            }
+        }
+
+    }
+    else if (drawingMode == DELETE) {
+        foreach (QGraphicsPolygonItem* polygon, shapes) {
+            if (polygon->contains(event->scenePos())) {
+                shapes.removeOne(polygon);
+                delete polygon;
+                return;
+            }
+        }
     }
     else if (drawingMode == TRIANGLE) {
         points.append(event->scenePos());
@@ -211,6 +242,10 @@ void GraphicsImage::drawShape(QList<QPointF> p) {
     pen.setWidth(2);
     shape->setPen(pen);
     shape->setPolygon(polygon);
+
+    shape->setFlag(GraphicsItemFlag::ItemIsMovable, true);
+    shape->setFlag(GraphicsItemFlag::ItemIsSelectable, true);
+
     shapes.append(shape);
 
     points.clear();
