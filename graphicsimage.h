@@ -9,6 +9,8 @@
 #include <QGraphicsLineItem>
 #include <QPen>
 
+#include <math.h>
+
 class GraphicsImage : public QObject, public QGraphicsPixmapItem
 {
 
@@ -42,6 +44,7 @@ private:
 
     QList<QPointF> points;
     QList<QGraphicsLineItem*> tempLines;
+    QList<QGraphicsPolygonItem*> shapes;
     QGraphicsLineItem* drawingLine;
 
 };

@@ -6,6 +6,7 @@ GraphicsImage::GraphicsImage(QObject* parent)
 {
     points = QList<QPointF>();
     tempLines = QList<QGraphicsLineItem*>();
+    shapes = QList<QGraphicsPolygonItem*>();
 
     drawingLine = new QGraphicsLineItem(this);
     QPen pen = QPen();
@@ -47,19 +48,14 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         else if (points.size() == 3) {
             drawShape(points);
         }
-        return;
     }
     else if (drawingMode == RECTANGLE) {
-        if (points.size() == 2) {
-            //Append last point, but ensuring side is parallel
-            //Complete rectangle by plotting from first to second point, second to third, and first to a calculated point using first and third
-            points.empty();
+        points.append(event->scenePos());
+        if (points.size() == 2 || points.size() == 3) {
+            drawLine(points.at(points.size() - 2), points.at(points.size() - 1));
         }
-        else {
-            points.append(event->scenePos());
-            if (points.size() == 2) {
-                //Draw line from first to second point
-            }
+        else if (points.size() == 4) {
+            drawShape(points);
         }
     }
     else if (drawingMode == TRAPEZIUM) {
@@ -74,18 +70,31 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
     else if (drawingMode == POLYGON) {
+
+        if (points.size() > 2) {
+
+            QPointF firstPoint = getPoints().first();
+            QLineF distanceLine = QLineF(firstPoint, event->scenePos());
+
+            if (distanceLine.length() < 10) {
+                points.append(QPointF(firstPoint.x(), firstPoint.y()));
+                drawShape(points);
+                return;
+            }
+
+        }
+
         points.append(event->scenePos());
-        if (points.size() == 7) {
-            //Complete octagon by plotting from last to first point
-            points.empty();
+
+        if (points.size() == 8) {
+            drawShape(points);
         }
         else {
             if (points.size() > 1) {
-                //Draw line from previous to last point
+                drawLine(points.at(points.size() - 2), points.at(points.size() - 1));
             }
         }
     }
-    //std::cout << "Pressed at" << event->scenePos().x() << ", " << event->scenePos().y() << std::endl;
 
 }
 
@@ -99,6 +108,75 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
             line.setP2(event->scenePos());
             drawingLine->setLine(line);
         }
+        else if (getDrawingMode() == RECTANGLE) {
+            if (points.size() == 1) {
+                QLineF line = QLineF();
+                line.setP1(getPoints().last());
+                line.setP2(event->scenePos());
+                drawingLine->setLine(line);
+            }
+            else if (points.size() == 2) {
+
+                QLineF line = QLineF();
+                line.setP1(points.at(0));
+                line.setP2(points.at(1));
+
+                qreal perpendicular;
+                if (line.angle() > 270) {
+                    perpendicular = line.angle() - 90;
+                }
+                else {
+                    perpendicular = line.angle() + 90;
+                }
+                perpendicular = (perpendicular * (atan(1)*4)) / 180;
+
+                QLineF newLine = QLineF();
+                newLine.setP1(points.at(1));
+                qreal x = points.at(1).x();
+                qreal y = points.at(1).y();
+
+                QLineF distanceCal = QLineF();
+                distanceCal.setP1(points.at(1));
+                distanceCal.setP2(event->scenePos());
+                int distance = distanceCal.length();
+
+                QPointF perpendicularPoint = QPointF();
+                perpendicularPoint.setX(x + (distance * cos(perpendicular)));
+                perpendicularPoint.setY(y + (distance * sin(perpendicular)));
+                newLine.setP2(perpendicularPoint);
+
+                drawingLine->setLine(newLine);
+
+            }
+        }
+
+        else if (getDrawingMode() == TRAPEZIUM) {
+
+        }
+        else if (getDrawingMode() == POLYGON) {
+            if (points.size() > 0 && points.size() < 8) {
+                QLineF line = QLineF();
+
+                if (points.size() > 2) {
+
+                    QPointF firstPoint = getPoints().first();
+                    QLineF distanceLine = QLineF(firstPoint, event->scenePos());
+
+                    if (distanceLine.length() < 10) {
+                        line.setP1(getPoints().last());
+                        line.setP2(firstPoint);
+                        drawingLine->setLine(line);
+                        return;
+                    }
+
+                }
+                line.setP1(getPoints().last());
+                line.setP2(event->scenePos());
+                drawingLine->setLine(line);
+            }
+
+        }
+
     }
 
 }
@@ -123,6 +201,18 @@ void GraphicsImage::clearLines() {
 
 void GraphicsImage::drawShape(QList<QPointF> p) {
     clearLines();
+
+    QPolygonF polygon = QPolygonF();
+    for (int i = 0;i<p.size();i++) {
+        polygon.append(p.at(i));
+    }
+    QGraphicsPolygonItem* shape = new QGraphicsPolygonItem(this);
+    QPen pen = QPen();
+    pen.setWidth(2);
+    shape->setPen(pen);
+    shape->setPolygon(polygon);
+    shapes.append(shape);
+
     points.clear();
     drawingLine->hide();
 }
