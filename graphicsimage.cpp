@@ -91,12 +91,13 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     }
     else if (drawingMode == TRAPEZIUM) {
         if (points.size() == 3) {
-
+            points.append(event->scenePos());
+            drawShape(points);
         }
         else {
             points.append(event->scenePos());
             if (points.size() == 2 || points.size() == 3) {
-                //Draw line from previous point to last point
+                drawLine(points.at(points.size() - 2), points.at(points.size() - 1));
             }
         }
     }
@@ -182,7 +183,12 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
         }
 
         else if (getDrawingMode() == TRAPEZIUM) {
-
+            if (points.size() >= 1 && points.size() <= 3) {
+                QLineF line = QLineF();
+                line.setP1(getPoints().last());
+                line.setP2(event->scenePos());
+                drawingLine->setLine(line);
+            }
         }
         else if (getDrawingMode() == POLYGON) {
             if (points.size() > 0 && points.size() < 8) {
