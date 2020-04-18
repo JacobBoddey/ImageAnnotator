@@ -81,11 +81,19 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
     else if (drawingMode == RECTANGLE) {
-        points.append(event->scenePos());
-        if (points.size() == 2 || points.size() == 3) {
+
+        if (points.size() == 0 || points.size() == 1) {
+            points.append(event->scenePos());
+            if (points.size() == 2) {
+                drawLine(points.at(0), points.at(1));
+            }
+        }
+        else if (points.size() == 2) {
+            points.append(drawingLine->line().p2());
             drawLine(points.at(points.size() - 2), points.at(points.size() - 1));
         }
-        else if (points.size() == 4) {
+        else if (points.size() == 3) {
+            points.append(event->scenePos());
             drawShape(points);
         }
     }
@@ -153,32 +161,34 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
                 line.setP1(points.at(0));
                 line.setP2(points.at(1));
 
-                qreal perpendicular;
-                if (line.angle() > 270) {
-                    perpendicular = line.angle() - 90;
+                qreal angle = line.angle();
+
+                qreal perpendicular = 0;
+                if (angle > 270.0) {
+                    perpendicular = angle - 90;
                 }
                 else {
-                    perpendicular = line.angle() + 90;
+                    perpendicular = angle + 90;
                 }
-                perpendicular = (perpendicular * (atan(1)*4)) / 180;
+
+                QLineF toCursor = QLineF();
+                toCursor.setP1(points.at(1));
+                toCursor.setP2(event->scenePos());
+                qreal distance = toCursor.length();
 
                 QLineF newLine = QLineF();
                 newLine.setP1(points.at(1));
-                qreal x = points.at(1).x();
-                qreal y = points.at(1).y();
-
-                QLineF distanceCal = QLineF();
-                distanceCal.setP1(points.at(1));
-                distanceCal.setP2(event->scenePos());
-                int distance = distanceCal.length();
-
-                QPointF perpendicularPoint = QPointF();
-                perpendicularPoint.setX(x + (distance * cos(perpendicular)));
-                perpendicularPoint.setY(y + (distance * sin(perpendicular)));
-                newLine.setP2(perpendicularPoint);
+                newLine.setP2(event->scenePos());
+                newLine.setAngle(perpendicular);
 
                 drawingLine->setLine(newLine);
 
+            }
+            else if (points.size() == 3) {
+
+                //Change mouse location
+                points.append(event->scenePos());
+                drawShape(points);
             }
         }
 
