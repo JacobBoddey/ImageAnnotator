@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     annotation.cpp \
     annotationcontroller.cpp \
+    autosave.cpp \
     classlabel.cpp \
     classlabelcontroller.cpp \
     filecontroller.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
 HEADERS += \
     annotation.h \
     annotationcontroller.h \
+    autosave.h \
     classlabel.h \
     classlabelcontroller.h \
     filecontroller.h \

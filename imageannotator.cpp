@@ -12,36 +12,10 @@
 
 #include <thread>
 #include <iostream>
-#include <time.h>
 
 AnnotationController annotationController;
 ClassLabelController classLabelController;
 ImageController imageController;
-
-void AutoSave() { // this is a thread to autosave the file being worked on
-    double sleepInterval = 60; // one minute
-    while (true) {
-        // save start time
-        time_t startTime = time(NULL);
-
-        // autosaving function
-        std::cout << "Ran auto save" << std::endl;
-
-
-        // save the end time
-        time_t endTime = time(NULL);
-
-        // compute sleep time
-        double timeElapsed = difftime(endTime, startTime);
-        int sleepTime = (int)(sleepInterval - timeElapsed);
-
-        // only sleep if sleepInterval hasn't been passed whilst saving
-        if (0 < sleepTime){
-            std::chrono::seconds sec(sleepTime);
-            std::this_thread::sleep_for(sec);
-        }
-    }
-}
 
 ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui::ImageAnnotator)
 {
@@ -49,8 +23,6 @@ ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui
 
     classLabelController = ClassLabelController();
     imageController = ImageController();
-
-    //std::thread autoSaveThread(AutoSave);
 
 }
 
