@@ -1,6 +1,7 @@
 #include "graphicsimage.h"
 
 #include <iostream>
+#include <QtDebug>
 
 GraphicsImage::GraphicsImage(QObject* parent)
 {
@@ -72,6 +73,7 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
     else if (drawingMode == TRIANGLE) {
+        qDebug() << "TRIANGLE MODE";
         points.append(event->scenePos());
         if (points.size() == 2) {
              drawLine(points.at(0), points.at(1));
@@ -81,23 +83,30 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
     else if (drawingMode == RECTANGLE) {
+        qDebug() << "RECTANGLE MODE";
 
         if (points.size() == 0 || points.size() == 1) {
+            qDebug() << "point size 0/1";
+
             points.append(event->scenePos());
             if (points.size() == 2) {
                 drawLine(points.at(0), points.at(1));
             }
         }
         else if (points.size() == 2) {
+            qDebug() << "point size 2";
+
             points.append(drawingLine->line().p2());
             drawLine(points.at(points.size() - 2), points.at(points.size() - 1));
         }
         else if (points.size() == 3) {
+            qDebug() << "point size 3";
             points.append(event->scenePos());
             drawShape(points);
         }
     }
     else if (drawingMode == TRAPEZIUM) {
+        qDebug() << "TRAPEZIUM MODE";
         if (points.size() == 3) {
             points.append(event->scenePos());
             drawShape(points);
@@ -110,6 +119,7 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
     else if (drawingMode == POLYGON) {
+        qDebug() << "POLYGON MODE";
 
         if (points.size() > 2) {
 
@@ -149,6 +159,7 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
             drawingLine->setLine(line);
         }
         else if (getDrawingMode() == RECTANGLE) {
+            qDebug() << "DrawingRecPointssize1";
             if (points.size() == 1) {
                 QLineF line = QLineF();
                 line.setP1(getPoints().last());
@@ -156,7 +167,7 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
                 drawingLine->setLine(line);
             }
             else if (points.size() == 2) {
-
+                qDebug() << "DrawingRecPointssize2";
                 QLineF line = QLineF();
                 line.setP1(points.at(0));
                 line.setP2(points.at(1));
@@ -185,7 +196,7 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 
             }
             else if (points.size() == 3) {
-
+                qDebug() << "DrawingRecPointssize3";
                 //Change mouse location
                 points.append(event->scenePos());
                 drawShape(points);
