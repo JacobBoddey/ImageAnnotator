@@ -20,6 +20,8 @@ public:
 
     GraphicsImage(QObject* parent);
 
+    QString fileName;
+
     QList<QPointF> getPoints();
 
     void setDrawingMode(DrawMode mode);

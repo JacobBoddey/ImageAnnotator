@@ -27,6 +27,8 @@ public:
     void addImage(Image* image);
     void removeImage(Image* image);
 
+    QList<Image*>* searchImages(QString term);
+
     void displayImages(QTableWidget* widget, QList<Image*>* im);
 
     QList<Image*>* sortByDate(QString sortType);

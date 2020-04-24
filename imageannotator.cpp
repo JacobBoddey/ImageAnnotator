@@ -159,6 +159,7 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
 
     QGraphicsScene* scene = new QGraphicsScene();
     QPixmap pixmap = QPixmap::fromImage(qImage);
+
     graphicsImage = new GraphicsImage(new QObject());
     graphicsImage->setPixmap(pixmap);
     graphicsImage->setAcceptHoverEvents(true);
