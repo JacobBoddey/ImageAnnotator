@@ -17,22 +17,12 @@ AnnotationController annotationController;
 ClassLabelController classLabelController;
 ImageController imageController;
 
-void AutoSave() {
-    while (true) {
-        std::cout << "Ran auto save" << std::endl;
-        std::chrono::seconds sec(5);
-        std::this_thread::sleep_for(sec);
-    }
-}
-
 ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui::ImageAnnotator)
 {
     ui->setupUi(this);
 
     classLabelController = ClassLabelController();
     imageController = ImageController();
-
-    //std::thread autoSaveThread(AutoSave);
 
 }
 
