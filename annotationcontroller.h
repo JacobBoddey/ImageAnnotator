@@ -2,6 +2,7 @@
 #define ANNOTATIONCONTROLLER_H
 
 #include <graphicsimage.h>
+#include <image.h>
 
 #include <QList>
 
@@ -17,6 +18,10 @@ public:
     AnnotationController();
 
     QList<GraphicsImage*>* getImageAnnotations();
+
+    GraphicsImage* getImageAnnotations(Image* image);
+
+    void addAnnotations(GraphicsImage* graphicsImage);
 
 };
 

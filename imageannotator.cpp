@@ -141,8 +141,10 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
 {
 
     if (graphicsImage != nullptr && graphicsImage->getShapes().size() != 0) {
-
+        annotationController.addAnnotations(graphicsImage);
     }
+
+    //if (annotationController.getImageAnnotations())
 
     column = 0;
 
