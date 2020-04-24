@@ -262,6 +262,7 @@ void GraphicsImage::clearLines() {
 }
 
 void GraphicsImage::drawShape(QList<QPointF> p) {
+
     clearLines();
 
     QPolygonF polygon = QPolygonF();
@@ -281,6 +282,7 @@ void GraphicsImage::drawShape(QList<QPointF> p) {
 
     points.clear();
     drawingLine->hide();
+
 }
 
 GraphicsImage::~GraphicsImage() {

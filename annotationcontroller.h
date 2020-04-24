@@ -4,6 +4,10 @@
 #include <graphicsimage.h>
 #include <image.h>
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 #include <QList>
 
 class AnnotationController
@@ -22,6 +26,10 @@ public:
     GraphicsImage* getImageAnnotations(Image* image);
 
     void addAnnotations(GraphicsImage* graphicsImage);
+
+    void saveAnnotations(QString fileName);
+
+    int getNumberAnnotations();
 
 };
 

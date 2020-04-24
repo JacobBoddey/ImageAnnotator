@@ -242,7 +242,7 @@ void ImageAnnotator::on_actionOpen_triggered()
 void ImageAnnotator::on_actionSave_As_triggered()
 {
 
-    if (graphicsImage == nullptr || graphicsImage->getShapes().size() == 0) {
+    if (annotationController.getNumberAnnotations() == 0) {
         QMessageBox messageBox;
         messageBox.critical(0,"Error","There is nothing to save");
         messageBox.setFixedSize(500,200);
@@ -253,7 +253,7 @@ void ImageAnnotator::on_actionSave_As_triggered()
     QFileDialog* fileDialog = new QFileDialog();
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
     QString fileName = fileDialog->getSaveFileName(this, "Save Annotations", QDir::currentPath(), tr("Annotations (*.annotations)"));
-
+    annotationController.saveAnnotations(fileName);
 
 }
 
