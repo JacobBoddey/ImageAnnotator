@@ -144,8 +144,6 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
         annotationController.addAnnotations(graphicsImage);
     }
 
-    //if (annotationController.getImageAnnotations())
-
     column = 0;
 
     QString name = ui->imageTableView->item(row, column)->text();
@@ -153,13 +151,22 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
     Image* image = imageController.getImage(name);
 
     QImage qImage(image->getPath() + "/" + image->getName());
-
     QGraphicsScene* scene = new QGraphicsScene();
     QPixmap pixmap = QPixmap::fromImage(qImage);
 
-    graphicsImage = new GraphicsImage(new QObject());
-    graphicsImage->setPixmap(pixmap);
-    graphicsImage->setAcceptHoverEvents(true);
+
+    if (!annotationController.getImageAnnotations(image)) {
+
+        graphicsImage = new GraphicsImage(new QObject());
+        graphicsImage->setPixmap(pixmap);
+        graphicsImage->fileName = name;
+        graphicsImage->setAcceptHoverEvents(true);
+
+    }
+    else {
+        graphicsImage = annotationController.getImageAnnotations(image);
+    }
+
     scene->addItem(graphicsImage);
 
     ui->graphicsView->setScene(scene);
