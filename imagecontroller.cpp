@@ -66,7 +66,7 @@ void ImageController::displayImages(QTableWidget* widget, QList<Image*>* im) {
 }
 
 QList<Image*>* ImageController::searchImages(QString term) {
-return getImages();
+    return getImages();
 }
 
 QList<Image*>* ImageController::sortByName(QString sortType) {

@@ -59,6 +59,8 @@ private slots:
 
     void on_addClassButton_clicked();
 
+    void on_searchImages_textChanged(const QString &arg1);
+
 private:
 
     Ui::ImageAnnotator *ui;

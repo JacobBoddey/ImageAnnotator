@@ -139,6 +139,11 @@ void ImageAnnotator::on_sortImageButton_clicked()
 
 void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
 {
+
+    if (graphicsImage != nullptr && graphicsImage->getShapes().size() != 0) {
+
+    }
+
     column = 0;
 
     QString name = ui->imageTableView->item(row, column)->text();
@@ -228,10 +233,17 @@ void ImageAnnotator::on_actionOpen_triggered()
 void ImageAnnotator::on_actionSave_As_triggered()
 {
 
+    if (graphicsImage == nullptr || graphicsImage->getShapes().size() == 0) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","There is nothing to save");
+        messageBox.setFixedSize(500,200);
+        ui->actionSaveClasses->setEnabled(false);
+        return;
+    }
+
     QFileDialog* fileDialog = new QFileDialog();
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
     QString fileName = fileDialog->getSaveFileName(this, "Save Annotations", QDir::currentPath(), tr("Annotations (*.annotations)"));
-
 
 
 }
@@ -254,4 +266,9 @@ void ImageAnnotator::on_addClassButton_clicked()
             classLabelController.updateClassesList(ui->classList, sortType);
         }
     }
+}
+
+void ImageAnnotator::on_searchImages_textChanged(const QString &arg1)
+{
+    imageController.displayImages(ui->imageTableView, imageController.searchImages(arg1));
 }

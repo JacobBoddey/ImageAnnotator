@@ -23,10 +23,17 @@ QList<QPointF> GraphicsImage::getPoints() {
     return points;
 }
 
+QList<QGraphicsPolygonItem*> GraphicsImage::getShapes() {
+    return shapes;
+}
+
 void GraphicsImage::setDrawingMode(GraphicsImage::DrawMode mode) {
     drawingMode = mode;
     if (mode != SELECT && mode != DELETE) {
         QApplication::setOverrideCursor(Qt::CrossCursor);
+    }
+    else if (mode == DELETE) {
+        QApplication::setOverrideCursor(Qt::PointingHandCursor);
     }
     else {
         QApplication::restoreOverrideCursor();

@@ -24,6 +24,8 @@ public:
 
     QList<QPointF> getPoints();
 
+    QList<QGraphicsPolygonItem*> getShapes();
+
     void setDrawingMode(DrawMode mode);
 
     DrawMode getDrawingMode();
