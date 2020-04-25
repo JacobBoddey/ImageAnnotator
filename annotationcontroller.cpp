@@ -8,6 +8,9 @@ AnnotationController::AnnotationController()
 }
 
 void AnnotationController::addAnnotations(GraphicsImage* graphicsImage) {
+    if (getImageAnnotations(graphicsImage->fileName) != NULL) {
+        removeAnnotations(graphicsImage);
+    }
     imageAnnotations->append(graphicsImage);
 }
 
@@ -19,6 +22,19 @@ GraphicsImage* AnnotationController::getImageAnnotations(Image* image) {
         }
     }
     return NULL;
+}
+
+GraphicsImage* AnnotationController::getImageAnnotations(QString fileName) {
+    for (int i = 0 ; i < imageAnnotations->size() ; i ++) {
+        if (imageAnnotations->at(i)->fileName == fileName) {
+            return imageAnnotations->at(i);
+        }
+    }
+    return NULL;
+}
+
+void AnnotationController::removeAnnotations(GraphicsImage* gImage) {
+    imageAnnotations->removeOne(gImage);
 }
 
 int AnnotationController::getNumberAnnotations() {

@@ -25,9 +25,13 @@ public:
 
     GraphicsImage* getImageAnnotations(Image* image);
 
+    GraphicsImage* getImageAnnotations(QString fName);
+
     void addAnnotations(GraphicsImage* graphicsImage);
 
     void saveAnnotations(QString fileName);
+
+    void removeAnnotations(GraphicsImage* gImage);
 
     int getNumberAnnotations();
 
