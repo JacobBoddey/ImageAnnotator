@@ -7,7 +7,7 @@ GraphicsImage::GraphicsImage(QObject* parent)
 {
     points = QList<QPointF>();
     tempLines = QList<QGraphicsLineItem*>();
-    shapes = QList<QGraphicsPolygonItem*>();
+    shapes = QList<GraphicsShape*>();
 
     selectedShape = NULL;
 
@@ -23,7 +23,7 @@ QList<QPointF> GraphicsImage::getPoints() {
     return points;
 }
 
-QList<QGraphicsPolygonItem*> GraphicsImage::getShapes() {
+QList<GraphicsShape*> GraphicsImage::getShapes() {
     return shapes;
 }
 
@@ -61,7 +61,7 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
             }
         }
 
-        foreach (QGraphicsPolygonItem* polygon, shapes) {
+        foreach (GraphicsShape* polygon, shapes) {
             if (polygon->contains(event->scenePos())) {
                 selectedShape = polygon;
                 polygon->setSelected(true);
@@ -71,7 +71,7 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
     }
     else if (drawingMode == DELETE) {
-        foreach (QGraphicsPolygonItem* polygon, shapes) {
+        foreach (GraphicsShape* polygon, shapes) {
             if (polygon->contains(event->scenePos())) {
                 shapes.removeOne(polygon);
                 delete polygon;
@@ -269,11 +269,15 @@ void GraphicsImage::drawShape(QList<QPointF> p) {
     for (int i = 0;i<p.size();i++) {
         polygon.append(p.at(i));
     }
-    QGraphicsPolygonItem* shape = new QGraphicsPolygonItem(this);
+    GraphicsShape* shape = new GraphicsShape(this);
     QPen pen = QPen();
     pen.setWidth(2);
     shape->setPen(pen);
     shape->setPolygon(polygon);
+
+    QGraphicsSimpleTextItem* textLabel = new QGraphicsSimpleTextItem(shape);
+    textLabel->setText("Class");
+    textLabel->setPos(shape->polygon().boundingRect().center());
 
     shape->setFlag(GraphicsItemFlag::ItemIsMovable, true);
     shape->setFlag(GraphicsItemFlag::ItemIsSelectable, true);

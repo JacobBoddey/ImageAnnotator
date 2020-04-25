@@ -23,6 +23,7 @@ SOURCES += \
     classlabelcontroller.cpp \
     filecontroller.cpp \
     graphicsimage.cpp \
+    graphicsshape.cpp \
     image.cpp \
     imagecontroller.cpp \
     linkedlist.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     classlabelcontroller.h \
     filecontroller.h \
     graphicsimage.h \
+    graphicsshape.h \
     image.h \
     imageannotator.h \
     imagecontroller.h \
