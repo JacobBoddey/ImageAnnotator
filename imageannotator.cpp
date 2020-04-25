@@ -227,7 +227,58 @@ void ImageAnnotator::on_actionOpen_triggered()
 {
 
     QString fileName = QFileDialog::getOpenFileName(this, "Open Annotations", QDir::currentPath(), "Annotations (*.annotations)");
-    //annotationController.openAnnotations(fileName);
+    QJsonDocument jsonDocument = fileController.loadAnnotations(fileName);
+
+    QJsonObject jsonObject = jsonDocument.object();
+    QDir imagesPath(jsonObject["imagesPath"].toString());
+    imageController.loadImages(imagesPath);
+    imageController.displayImages(ui->imageTableView, imageController.getImages());
+
+    QJsonArray annotationObjects = jsonObject["annotations"].toArray();
+    for (int i = 0 ; i < annotationObjects.size() ; i ++) {
+
+        QJsonObject annotationObject = annotationObjects.at(i).toObject();
+        QString imageName = annotationObject["imageName"].toString();
+
+        GraphicsImage* graphicsImage = new GraphicsImage(new QObject());
+
+        Image* image = imageController.getImage(imageName);
+
+        QImage qImage(image->getPath() + "/" + image->getName());
+        QGraphicsScene* scene = new QGraphicsScene();
+        QPixmap pixmap = QPixmap::fromImage(qImage);
+
+        graphicsImage->setPixmap(pixmap);
+        graphicsImage->fileName = imageName;
+        graphicsImage->filePath = image->getPath();
+        graphicsImage->setAcceptHoverEvents(true);
+
+        QJsonArray shapesArray = annotationObject["shapes"].toArray();
+        for (int j = 0 ; j < shapesArray.size() ; j ++) {
+
+            QList<QPointF> points;
+            QJsonObject shapeObject = shapesArray.at(j).toObject();
+
+            QJsonArray shapeVertices = shapeObject["vertices"].toArray();
+            for (int k = 0 ; k < shapeVertices.size() ; k ++) {
+                int x = shapeVertices.at(k).toArray()[0].toInt();
+                int y = shapeVertices.at(k).toArray()[1].toInt();
+                points.append(QPointF(x, y));
+            }
+
+            graphicsImage->drawShape(points);
+
+        }
+
+        scene->addItem(graphicsImage);
+
+        ui->graphicsView->setScene(scene);
+        ui->graphicsView->setMouseTracking(true);
+        ui->graphicsView->setInteractive(true);
+
+        annotationController.addAnnotations(graphicsImage);
+
+    }
 
 }
 

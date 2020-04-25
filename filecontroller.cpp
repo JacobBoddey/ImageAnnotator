@@ -13,3 +13,12 @@ void FileController::saveAnnotations(QString fileName, QJsonDocument json) {
     file.close();
 
 }
+
+QJsonDocument FileController::loadAnnotations(QString fileName) {
+
+    QFile file(fileName);
+    file.open(QIODevice::ReadOnly);
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(file.readAll());
+    return jsonDoc;
+
+}

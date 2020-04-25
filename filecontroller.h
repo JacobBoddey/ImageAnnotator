@@ -16,6 +16,8 @@ public:
 
     void saveAnnotations(QString fileName, QJsonDocument json);
 
+    QJsonDocument loadAnnotations(QString fileName);
+
 };
 
 #endif // FILECONTROLLER_H
