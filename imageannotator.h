@@ -73,11 +73,20 @@ private slots:
 
     void on_searchImages_textChanged(const QString &arg1);
 
+    void on_actionSave_triggered();
+
 private:
 
     Ui::ImageAnnotator *ui;
 
     GraphicsImage* graphicsImage;
+
+    AnnotationController annotationController;
+    ClassLabelController classLabelController;
+    ImageController imageController;
+    FileController fileController;
+
+    QString openAnnotationsFile;
 
 };
 #endif // IMAGEANNOTATOR_H

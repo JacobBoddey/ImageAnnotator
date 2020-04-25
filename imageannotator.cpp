@@ -1,11 +1,6 @@
 #include "imageannotator.h"
 #include "ui_imageannotator.h"
 
-AnnotationController annotationController;
-ClassLabelController classLabelController;
-ImageController imageController;
-FileController fileController;
-
 ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui::ImageAnnotator)
 {
     ui->setupUi(this);
@@ -280,6 +275,9 @@ void ImageAnnotator::on_actionOpen_triggered()
 
     }
 
+    openAnnotationsFile = fileName;
+    ui->actionSave->setEnabled(true);
+
 }
 
 void ImageAnnotator::on_actionSave_As_triggered()
@@ -330,4 +328,22 @@ void ImageAnnotator::on_addClassButton_clicked()
 void ImageAnnotator::on_searchImages_textChanged(const QString &arg1)
 {
     imageController.displayImages(ui->imageTableView, imageController.searchImages(arg1));
+}
+
+void ImageAnnotator::on_actionSave_triggered()
+{
+    if (graphicsImage != NULL && graphicsImage->getShapes().size() > 0) {
+        annotationController.addAnnotations(graphicsImage);
+    }
+
+    if (annotationController.getNumberAnnotations() == 0) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","There is nothing to save");
+        messageBox.setFixedSize(500,200);
+        ui->actionSaveClasses->setEnabled(false);
+        return;
+    }
+
+    QJsonDocument json = annotationController.toJSON();
+    fileController.saveAnnotations(openAnnotationsFile, json);
 }
