@@ -151,6 +151,7 @@ void ImageAnnotator::on_imageTableView_cellClicked(int row, int column)
         graphicsImage = new GraphicsImage(new QObject());
         graphicsImage->setPixmap(pixmap);
         graphicsImage->fileName = name;
+        graphicsImage->filePath = image->getPath();
         graphicsImage->setAcceptHoverEvents(true);
 
     }
@@ -226,7 +227,7 @@ void ImageAnnotator::on_actionOpen_triggered()
 {
 
     QString fileName = QFileDialog::getOpenFileName(this, "Open Annotations", QDir::currentPath(), "Annotations (*.annotations)");
-    QFile annotationsFile(fileName);
+    //annotationController.openAnnotations(fileName);
 
 }
 

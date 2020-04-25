@@ -22,6 +22,8 @@ public:
 
     QString fileName;
 
+    QString filePath;
+
     QList<QPointF> getPoints();
 
     QList<QGraphicsPolygonItem*> getShapes();

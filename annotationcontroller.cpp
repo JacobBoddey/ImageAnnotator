@@ -46,6 +46,7 @@ QJsonDocument AnnotationController::toJSON() {
     QJsonObject annotationsObject;
 
     annotationsObject.insert("numImages", imageAnnotations->size());
+    annotationsObject.insert("imagesPath", imageAnnotations->at(0)->filePath);
 
     QJsonArray annotationsArray;
 
