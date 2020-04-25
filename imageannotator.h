@@ -3,7 +3,19 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
+
+#include <annotationcontroller.h>
+#include <classlabelcontroller.h>
+#include <imagecontroller.h>
+#include <filecontroller.h>
+
+#include <QFileDialog>
+#include <QTextStream>
+#include <QMessageBox>
 #include <graphicsimage.h>
+
+#include <thread>
+#include <iostream>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageAnnotator; }

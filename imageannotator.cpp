@@ -1,21 +1,10 @@
 #include "imageannotator.h"
 #include "ui_imageannotator.h"
 
-#include <annotationcontroller.h>
-#include <classlabelcontroller.h>
-#include <imagecontroller.h>
-
-#include <QFileDialog>
-#include <QTextStream>
-#include <QMessageBox>
-#include <graphicsimage.h>
-
-#include <thread>
-#include <iostream>
-
 AnnotationController annotationController;
 ClassLabelController classLabelController;
 ImageController imageController;
+FileController fileController;
 
 ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui::ImageAnnotator)
 {
@@ -23,6 +12,8 @@ ImageAnnotator::ImageAnnotator(QWidget *parent) : QMainWindow(parent), ui(new Ui
 
     classLabelController = ClassLabelController();
     imageController = ImageController();
+    annotationController = AnnotationController();
+    fileController = FileController();
 
 }
 
@@ -257,7 +248,10 @@ void ImageAnnotator::on_actionSave_As_triggered()
     QFileDialog* fileDialog = new QFileDialog();
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
     QString fileName = fileDialog->getSaveFileName(this, "Save Annotations", QDir::currentPath(), tr("Annotations (*.annotations)"));
-    annotationController.saveAnnotations(fileName);
+    QJsonDocument json = annotationController.toJSON();
+    fileController.saveAnnotations(fileName, json);
+
+    ui->actionSave->setEnabled(true);
 
 }
 

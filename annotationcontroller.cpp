@@ -41,9 +41,7 @@ int AnnotationController::getNumberAnnotations() {
     return imageAnnotations->size();
 }
 
-void AnnotationController::saveAnnotations(QString fileName) {
-
-    QFile saveFile(fileName);
+QJsonDocument AnnotationController::toJSON() {
 
     QJsonObject annotationsObject;
 
@@ -85,5 +83,6 @@ void AnnotationController::saveAnnotations(QString fileName) {
     annotationsObject.insert("annotations", annotationsArray);
 
     QJsonDocument jsonDocument(annotationsObject);
+    return jsonDocument;
 
 }

@@ -15,13 +15,6 @@ void AutoSave::run()
         // save start time
         time_t startTime = time(NULL);
 
-        /* autosaving function
-         *
-         * to be implemented
-         *
-         *
-        */
-
         // save the end time and elapsed time
         time_t endTime = time(NULL);
         double timeElapsed = difftime(endTime, startTime);

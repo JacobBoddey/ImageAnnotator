@@ -29,7 +29,7 @@ public:
 
     void addAnnotations(GraphicsImage* graphicsImage);
 
-    void saveAnnotations(QString fileName);
+    QJsonDocument toJSON();
 
     void removeAnnotations(GraphicsImage* gImage);
 
