@@ -2,14 +2,34 @@
 
 #include <iostream>
 
+/**
+ * Initialising the Image Controller
+ *
+ * Sets images to new QList of type Image pointer
+ */
+
 ImageController::ImageController()
 {
     images = QList<Image*>();
 }
 
+/**
+ * Retrieves the list of images
+ *
+ * @return QList<Image*>* - pointer list of image pointers
+ */
+
 QList<Image*>* ImageController::getImages() {
     return &images;
 }
+
+
+/**
+ * Retrieves the list of images
+ *
+ * @param name - The file name e.g picture.png
+ * @return Image* - pointer to the image with the matching file name
+ */
 
 Image* ImageController::getImage(QString name) {
     for (int i = 0 ; i < images.size() ; i++) {
@@ -18,6 +38,13 @@ Image* ImageController::getImage(QString name) {
         }
     }
 }
+
+
+/**
+ * Loads images from a directory
+ *
+ * @param QDir - the directory in which to load the images from
+ */
 
 void ImageController::loadImages(QDir dir) {
 
@@ -33,13 +60,32 @@ void ImageController::loadImages(QDir dir) {
 
 }
 
+/**
+ * Adds an image to the list of images
+ *
+ * @param Image* - the pointer to the image to add
+ */
+
 void ImageController::addImage(Image* i) {
     images.append(i);
 }
 
+/**
+ * Removes an image from the list
+ *
+ * @param Image* - pointer to the image to remove
+ */
+
 void ImageController::removeImage(Image* i) {
     images.removeOne(i);
 }
+
+/**
+ * Displays a list of images in the table view
+ *
+ * @param QTableWidget* - pointer to the table widget which contains the image listings
+ * @param QList<Image*>* - pointer to the list of images to display within the widget
+ */
 
 void ImageController::displayImages(QTableWidget* widget, QList<Image*>* im) {
 
@@ -65,9 +111,22 @@ void ImageController::displayImages(QTableWidget* widget, QList<Image*>* im) {
 
 }
 
+/**
+ * Returns the images with names that match the search term
+ *
+ * @param QString - the search term
+ */
+
 QList<Image*>* ImageController::searchImages(QString term) {
     return getImages();
 }
+
+/**
+ * Sorts the images by their name
+ *
+ * @param QString - Either "Ascending" or "Descending"
+ * @return QList<Image*>* - The sorted list of images
+ */
 
 QList<Image*>* ImageController::sortByName(QString sortType) {
 
@@ -88,6 +147,13 @@ QList<Image*>* ImageController::sortByName(QString sortType) {
 
     return getImages();
 }
+
+/**
+ * Sorts the images by the date they were last modified
+ *
+ * @param QString - Either "Ascending" or "Descending"
+ * @return QList<Image*>* - The sorted list of images
+ */
 
 QList<Image*>* ImageController::sortByDate(QString sortType) {
 

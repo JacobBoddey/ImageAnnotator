@@ -2,10 +2,22 @@
 
 #include <iostream>
 
+/**
+ * AnnotationController constructor
+ *
+ * Initialises imageAnnotations to a new empty QList of GraphicsImage pointers
+ */
+
 AnnotationController::AnnotationController()
 {
     imageAnnotations = new QList<GraphicsImage*>();
 }
+
+/**
+ * Add an annotation to the list
+ *
+ * @param GraphicsImage* - The GraphicsImage pointer to add
+ */
 
 void AnnotationController::addAnnotations(GraphicsImage* graphicsImage) {
     if (getImageAnnotations(graphicsImage->fileName) != NULL) {
@@ -13,6 +25,12 @@ void AnnotationController::addAnnotations(GraphicsImage* graphicsImage) {
     }
     imageAnnotations->append(graphicsImage);
 }
+
+/**
+ * Get a GraphicsImage pointer
+ *
+ * @param Image* - Pointer to the image to search by
+ */
 
 GraphicsImage* AnnotationController::getImageAnnotations(Image* image) {
 
@@ -23,6 +41,13 @@ GraphicsImage* AnnotationController::getImageAnnotations(Image* image) {
     }
     return NULL;
 }
+
+/**
+ * Get a GraphicsImage pointer
+ *
+ * @param QString - File name of the image belonging to the Graphics Image
+ * @return GraphicsImage* - A pointer to the Graphics Image with the matching name
+ */
 
 GraphicsImage* AnnotationController::getImageAnnotations(QString fileName) {
     for (int i = 0 ; i < imageAnnotations->size() ; i ++) {
@@ -37,9 +62,21 @@ void AnnotationController::removeAnnotations(GraphicsImage* gImage) {
     imageAnnotations->removeOne(gImage);
 }
 
+/**
+ * Get the number of annotations in the list of annotations for this Graphics Image
+ *
+ * @return int - The number of annotations in the list
+ */
+
 int AnnotationController::getNumberAnnotations() {
     return imageAnnotations->size();
 }
+
+/**
+ * Get the JSON format of the annotations
+ *
+ * @return QJsonDocument - The JSON output
+ */
 
 QJsonDocument AnnotationController::toJSON() {
 

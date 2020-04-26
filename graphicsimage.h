@@ -8,7 +8,7 @@
 #include <QEvent>
 #include <QGraphicsLineItem>
 #include <QPen>
-#include <graphicsshape.h>
+#include <QGraphicsPolygonItem>
 
 #include <math.h>
 
@@ -27,7 +27,7 @@ public:
 
     QList<QPointF> getPoints();
 
-    QList<GraphicsShape*> getShapes();
+    QList<QGraphicsPolygonItem*> getShapes();
 
     void setDrawingMode(DrawMode mode);
 
@@ -51,9 +51,9 @@ private:
 
     QList<QPointF> points;
     QList<QGraphicsLineItem*> tempLines;
-    QList<GraphicsShape*> shapes;
+    QList<QGraphicsPolygonItem*> shapes;
     QGraphicsLineItem* drawingLine;
-    GraphicsShape* selectedShape;
+    QGraphicsPolygonItem* selectedShape;
 
 };
 

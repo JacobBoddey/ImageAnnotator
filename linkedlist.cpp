@@ -6,27 +6,63 @@ Node::Node() {
 
 }
 
+/**
+ * Obtain the ClassLabel stored in the node
+ *
+ * @return ClassLabel - The Class Label stored as data
+ */
+
 ClassLabel Node::get() {
     return data;
 }
+
+/**
+ * Sets the Class Label
+ *
+ * @param ClassLabel - The ClassLabel to set the data attribute to
+ */
 
 void Node::set(ClassLabel label) {
     data = label;
 }
 
+/**
+ * Get the next node
+ *
+ * @return Node* - pointer to the next node in the linked list
+ */
+
 Node* Node::getNext() {
     return next;
 }
 
+/**
+ * Set the next node
+ *
+ * @param Node* - The node to be next in the linked list
+ */
+
 void Node::setNext(Node* n) {
     next = n;
 }
+
+/**
+ * Linked List constructor
+ *
+ * Sets the head and tail to be null - as the list is empty
+ */
 
 LinkedList::LinkedList()
 {
     head = nullptr;
     tail = nullptr;
 }
+
+/**
+ * Append ClassLabel to list
+ *
+ * @param ClassLabel - The label to append to the list
+ */
 
 void LinkedList::append(ClassLabel label) {
 
@@ -43,9 +79,22 @@ void LinkedList::append(ClassLabel label) {
     tail = newNode;
 }
 
+/**
+ * Insert a class label at an index
+ *
+ * @param ClassLabel - The class label to insert
+ * @param int - The index to insert at
+ */
+
 void LinkedList::insert(ClassLabel label, int index) {
 
 }
+
+/**
+ * Retrieve a node with a given index
+ *
+ * @param int - The index to retrieve from
+ */
 
 Node* LinkedList::get(int index) {
     Node* current = head;
@@ -60,13 +109,31 @@ Node* LinkedList::get(int index) {
     }
 }
 
+/**
+ * Retrieve the first node
+ *
+ * @return Node* - The node at the start of the list
+ */
+
 Node* LinkedList::first() {
     return head;
 }
 
+/**
+ * Retrieve the last node
+ *
+ * @return Node* - The node at the end of the list
+ */
+
 Node* LinkedList::last() {
     return tail;
 }
+
+/**
+ * Get the size of the list
+ *
+ * @return int - The number of nodes in the list
+ */
 
 int LinkedList::size() {
 
@@ -83,11 +150,24 @@ int LinkedList::size() {
     return size;
 }
 
+/**
+ * Swaps two nodes
+ *
+ * @param Node* - The first node
+ * @param Node* - The second node
+ */
+
 void LinkedList::swap(Node* node1, Node* node2) {
     ClassLabel temp = node1->get();
     node1->set(node2->get());
     node2->set(temp);
 }
+
+/**
+ * Remove a ClassLabel from the list
+ *
+ * @param ClassLabel - The class label to remove
+ */
 
 void LinkedList::remove(ClassLabel label) {
 

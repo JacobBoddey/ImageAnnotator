@@ -1,9 +1,20 @@
 #include "filecontroller.h"
 
+/**
+ * FileController constructor
+ */
+
 FileController::FileController()
 {
 
 }
+
+/**
+ * Save the annotations to file
+ *
+ * @param QString - The name of the file name to save to (full path)
+ * @param QJsonDocument - The JSON document to save
+ */
 
 void FileController::saveAnnotations(QString fileName, QJsonDocument json) {
 
@@ -13,6 +24,13 @@ void FileController::saveAnnotations(QString fileName, QJsonDocument json) {
     file.close();
 
 }
+
+/**
+ * Get a JSON document from a file
+ *
+ * @param QString - The file name of the file (full path)
+ * @return QJsonDocument - The JSON document from the file
+ */
 
 QJsonDocument FileController::loadAnnotations(QString fileName) {
 

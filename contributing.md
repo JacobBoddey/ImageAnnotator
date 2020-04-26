@@ -5,13 +5,13 @@ Everyone is welcome to propose changes and to implement those changes to this pr
 
 ## Reporting Bugs
 It is very likely that bugs will be present in the development version of the program. In order to identify these bugs and to patch them, the correct reporting process should be followed. This will make development and testing more effective in the long term.
-1.	Create an issue at https://github.com/JoeyMarrey/SOFT20091-Group-Work/issues
+1.	Create an issue at https://olympuss.ntu.ac.uk/sdi-21/ImageAnnotator/issues
 2.	Assign the software developer to the issue
 3.	Set the label to “Bug”
 
 ## New Features
 Requests for new features are welcomed but should be done so following this process and these requirements:
-1.	Create an issue at https://github.com/JoeyMarrey/SOFT20091-Group-Work/issues
+1.	Create an issue at https://olympuss.ntu.ac.uk/sdi-21/ImageAnnotator/issues
 2.	Set the label to “Feature Request”  
 
 Feature requests should:

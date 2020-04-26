@@ -29,6 +29,8 @@ public:
 
     ImageAnnotator(QWidget *parent = nullptr);
 
+    GraphicsImage* graphicsImage;
+
     ~ImageAnnotator();
 
 private slots:
@@ -78,8 +80,6 @@ private slots:
 private:
 
     Ui::ImageAnnotator *ui;
-
-    GraphicsImage* graphicsImage;
 
     AnnotationController annotationController;
     ClassLabelController classLabelController;

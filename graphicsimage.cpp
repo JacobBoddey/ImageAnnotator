@@ -3,11 +3,17 @@
 #include <iostream>
 #include <QtDebug>
 
+/**
+ * GraphicsImage constructor
+ *
+ * @param QObject* - Pointer to the parent widget
+ */
+
 GraphicsImage::GraphicsImage(QObject* parent)
 {
     points = QList<QPointF>();
     tempLines = QList<QGraphicsLineItem*>();
-    shapes = QList<GraphicsShape*>();
+    shapes = QList<QGraphicsPolygonItem*>();
 
     selectedShape = NULL;
 
@@ -19,13 +25,31 @@ GraphicsImage::GraphicsImage(QObject* parent)
 
 }
 
+/**
+ * Get the vertices of the shape
+ *
+ * @return QList<QPointF> - The list of points
+ */
+
 QList<QPointF> GraphicsImage::getPoints() {
     return points;
 }
 
-QList<GraphicsShape*> GraphicsImage::getShapes() {
+/**
+ * Retrieve the list of shapes drawn on the image
+ *
+ * @return QList<QGraphicsPolygonItem*> - The list of shapes
+ */
+
+QList<QGraphicsPolygonItem*> GraphicsImage::getShapes() {
     return shapes;
 }
+
+/**
+ * Set the drawing mode
+ *
+ * @param DrawMode - The mode to set to
+ */
 
 void GraphicsImage::setDrawingMode(GraphicsImage::DrawMode mode) {
     drawingMode = mode;
@@ -40,9 +64,21 @@ void GraphicsImage::setDrawingMode(GraphicsImage::DrawMode mode) {
     }
 }
 
+/**
+ * Get the current drawing mode
+ *
+ * @return DrawMode - The current drawing mode
+ */
+
 GraphicsImage::DrawMode GraphicsImage::getDrawingMode() {
     return drawingMode;
 }
+
+/**
+ * Mouse Press Event
+ *
+ * @param QGraphicsSceneMouseEvent* - The mouse event object
+ */
 
 void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
@@ -61,7 +97,7 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
             }
         }
 
-        foreach (GraphicsShape* polygon, shapes) {
+        foreach (QGraphicsPolygonItem* polygon, shapes) {
             if (polygon->contains(event->scenePos())) {
                 selectedShape = polygon;
                 polygon->setSelected(true);
@@ -71,7 +107,7 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
     }
     else if (drawingMode == DELETE) {
-        foreach (GraphicsShape* polygon, shapes) {
+        foreach (QGraphicsPolygonItem* polygon, shapes) {
             if (polygon->contains(event->scenePos())) {
                 shapes.removeOne(polygon);
                 delete polygon;
@@ -151,6 +187,12 @@ void GraphicsImage::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     }
 
 }
+
+/**
+ * Mouse hover event
+ *
+ * @param QGraphicsSceneHoverEvent* - The mouse event object
+ */
 
 void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 
@@ -243,6 +285,13 @@ void GraphicsImage::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 
 }
 
+/**
+ * Draw a line on the image
+ *
+ * @param QPointF - The start of the line
+ * @param QPointF - The end of the line
+ */
+
 void GraphicsImage::drawLine(QPointF from, QPointF to) {
     QGraphicsLineItem* line = new QGraphicsLineItem(this);
     QLineF lineF = QLineF(from, to);
@@ -253,6 +302,10 @@ void GraphicsImage::drawLine(QPointF from, QPointF to) {
     tempLines.append(line);
 }
 
+/**
+ * Clears all lines on the image
+ */
+
 void GraphicsImage::clearLines() {
     for (int i = 0; i < tempLines.size();i++) {
         QGraphicsLineItem* item = tempLines.at(i);
@@ -260,6 +313,12 @@ void GraphicsImage::clearLines() {
     }
     tempLines.clear();
 }
+
+/**
+ * Draw a shape on the image
+ *
+ * @param QList<QPointF> - The list of vertices of the shape to draw
+ */
 
 void GraphicsImage::drawShape(QList<QPointF> p) {
 
@@ -269,7 +328,7 @@ void GraphicsImage::drawShape(QList<QPointF> p) {
     for (int i = 0;i<p.size();i++) {
         polygon.append(p.at(i));
     }
-    GraphicsShape* shape = new GraphicsShape(this);
+    QGraphicsPolygonItem* shape = new QGraphicsPolygonItem(this);
     QPen pen = QPen();
     pen.setWidth(2);
     shape->setPen(pen);
@@ -288,6 +347,10 @@ void GraphicsImage::drawShape(QList<QPointF> p) {
     drawingLine->hide();
 
 }
+
+/**
+ * GraphicsImage deconstructor
+ */
 
 GraphicsImage::~GraphicsImage() {
 

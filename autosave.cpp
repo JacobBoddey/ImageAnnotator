@@ -4,9 +4,17 @@
 #include <time.h>
 #include <ctime>
 
+/**
+ * AutoSave constructor
+ */
+
 AutoSave::AutoSave()
 {
 }
+
+/**
+ * Run the auto save
+ */
 
 void AutoSave::run()
 {
